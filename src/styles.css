@@ -1,0 +1,53 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+
+li {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.photo-link {
+  display: flex;
+  width: 1100px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+
+.photo-card {
+  display: block;
+  width: 300px;
+  border: 1px solid gray;
+
+}
+
+.photo-img {
+  display: block;
+  margin: 10px auto;
+  width: 90%;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+
+}
+
+.more-btn {
+  display: block;
+  height: 60px;
+  width: 150px;
+  margin: 30px auto;
+  background-color: green;
+  color: white;
+  font-weight: 700;
+}
