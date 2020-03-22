@@ -2,7 +2,7 @@ import './styles.css';
 // import apiService from './js/apiService'
 // import photoForm from "./templates/picture-form.hbs"
 
-import debounce from '../node_modules/lodash'
+
 
 const id = '15591781-785a03c118f12007382b46528';
 let pageNumber = 1;
@@ -20,6 +20,7 @@ function renderInputArea() {
   </form>`;
   const place = document.querySelector('#root');
   place.insertAdjacentHTML('afterbegin', inputArea);
+  console.log('hello');
 }
 
 renderInputArea();
@@ -32,12 +33,15 @@ function createUl() {
 }
 // createUl ()
 
-const searchData = e => {
-  e.preventDefault();
+
+
+function searchData (e) {
+  e.preventDefault()
+  console.log(e);
   if (document.querySelector('.photo-link')){
     document.querySelector('.photo-link').innerHTML = ""
   }
-  const input = e.target.value;
+  const input = document.querySelector('.input').value;
   apiService(input, pageNumber, id);
 };
 
@@ -98,22 +102,27 @@ function listenBtn() {
 }
 
 // generateButton ()
-let scroll = 0
+
 
 function addPage() {
   const input = document.querySelector('input');
   pageNumber += 1;
-
   console.log(pageNumber);
   apiService(input.value, pageNumber, id);
-  console.log('hello');
-  scroll = scroll + 1200
-  console.log(scroll);
+  scroll()
 }
 
-const input = document.querySelector('.input');
-input.addEventListener('input', _.debounce(searchData, 1000));
-input.addEventListener('input', createUl);
-input.addEventListener('input', _.debounce(generateButton, 1500));
+function scroll() {
+  console.log("scroll");
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: 'smooth',
+  });
+}
+
+const form = document.querySelector('#search-form');
+form.addEventListener('submit', searchData);
+form.addEventListener('submit', createUl);
+form.addEventListener('submit', generateButton);
 
 
