@@ -1,6 +1,6 @@
 import './styles.css';
-// import apiService from './js/apiService'
-// import photoForm from "./templates/picture-form.hbs"
+import * as basicLightbox from 'basiclightbox';
+import 'basiclightbox/src/styles/main.scss';
 
 
 
@@ -20,7 +20,6 @@ function renderInputArea() {
   </form>`;
   const place = document.querySelector('#root');
   place.insertAdjacentHTML('afterbegin', inputArea);
-  console.log('hello');
 }
 
 renderInputArea();
@@ -31,13 +30,10 @@ function createUl() {
   const place = document.querySelector('#root');
   place.insertAdjacentElement('beforeend', ul);
 }
-// createUl ()
-
 
 
 function searchData (e) {
   e.preventDefault()
-  console.log(e);
   if (document.querySelector('.photo-link')){
     document.querySelector('.photo-link').innerHTML = ""
   }
@@ -47,12 +43,11 @@ function searchData (e) {
 
 const apiService = (search, pageNumber, key) => {
   const URL = `https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${search}&page=${pageNumber}&per_page=12&key=${key}`;
-  console.log(URL);
+
   fetch(URL)
     .then(res => res.json())
     .then(data => {
-      console.log(data);
-      console.log(data.hits);
+
       data.hits.map(el => renderItem(el));
     });
 };
@@ -87,6 +82,30 @@ function renderItem(element) {
   place.insertAdjacentHTML('beforeend', item);
 }
 
+// function showPicture(event) {
+//   const instance = basicLightbox.create(`
+//     <img src="${event.target.largeImageURL}" width="800" height="600">
+// `)
+// instance.show()
+// }
+
+
+
+// const pictureClick = document.querySelector('body')
+
+// pictureClick.addEventListener('click', showPicture);
+
+// function showPicture(event) {
+//     if (event.target.nodeName === 'IMG') {
+//         const imageBig = event.target.dataset.source;
+//         console.log(event.target.dataset.source);
+//         console.log(event);
+//         basicLightbox.create(`
+//         <img src="${event.target.dataset.source}">
+//     `).show()
+//     }
+// }
+
 function generateButton() {
   if (!document.querySelector('.more-btn')) {
     const btn = `<button class="more-btn">Load more</button>`;
@@ -104,25 +123,32 @@ function listenBtn() {
 // generateButton ()
 
 
+
+
 function addPage() {
   const input = document.querySelector('input');
   pageNumber += 1;
-  console.log(pageNumber);
   apiService(input.value, pageNumber, id);
   scroll()
 }
 
+let page = 0
+
 function scroll() {
-  console.log("scroll");
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: 'smooth',
-  });
+  setTimeout(() => {
+    window.scrollTo({
+      top: +window.scrollY + 700,
+      behavior: 'smooth',
+    });
+  }, 1500);
 }
+
+
 
 const form = document.querySelector('#search-form');
 form.addEventListener('submit', searchData);
 form.addEventListener('submit', createUl);
 form.addEventListener('submit', generateButton);
+
 
 
