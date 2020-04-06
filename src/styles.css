@@ -43,6 +43,8 @@ li {
   display: block;
   margin: 10px auto;
   width: 90%;
+  height: 170px;
+  overflow: hidden;
 }
 
 .stats {
